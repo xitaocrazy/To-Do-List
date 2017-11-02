@@ -24,11 +24,18 @@ var main;
                 this.doneList = ko.observableArray([]);
                 this.hasNoTitle = ko.observable(false);
                 this.hasNoDescription = ko.observable(false);
-                this.getTodoList();
+                this.isDuplicatedKey = ko.observable(false);
+                this.invalidKeyMessage = ko.observable('');
+                this.isInvalidKey = ko.computed(function () {
+                    return _this.hasNoTitle() || _this.isDuplicatedKey();
+                });
             }
             ;
+            IndexViewModel.prototype.init = function () {
+                this.getTodoList();
+            };
             IndexViewModel.prototype.addNewItem = function () {
-                if (this.validateData()) {
+                if (this.hasValidData() && this.isUniqueKey()) {
                     this.insertNewItem();
                 }
             };
@@ -53,10 +60,29 @@ var main;
                 }
             };
             ;
-            IndexViewModel.prototype.validateData = function () {
+            IndexViewModel.prototype.hasValidData = function () {
                 this.hasNoTitle(this.title() === '');
                 this.hasNoDescription(this.description() === '');
+                if (this.hasNoTitle()) {
+                    this.invalidKeyMessage('Insert a title');
+                }
                 return !this.hasNoTitle() && !this.hasNoDescription();
+            };
+            IndexViewModel.prototype.isUniqueKey = function () {
+                this.isDuplicatedKey(false);
+                var value = localStorage.getItem(this.title());
+                if (value) {
+                    this.isDuplicatedKey(true);
+                    this.invalidKeyMessage('This title already was used');
+                }
+                else {
+                    value = localStorage.getItem(this.title() + '_Done');
+                    if (value) {
+                        this.isDuplicatedKey(true);
+                        this.invalidKeyMessage('This title already was used');
+                    }
+                }
+                return !this.isDuplicatedKey();
             };
             IndexViewModel.prototype.insertNewItem = function () {
                 var item = {
@@ -67,10 +93,14 @@ var main;
                     localStorage.setItem(item.title(), item.description());
                 }
                 this.toDoList.push(item);
+                this.cleanData();
+            };
+            IndexViewModel.prototype.cleanData = function () {
                 this.title('');
                 this.description('');
                 this.hasNoTitle(false);
                 this.hasNoDescription(false);
+                this.isDuplicatedKey(false);
             };
             return IndexViewModel;
         }());

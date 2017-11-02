@@ -12,6 +12,9 @@ module main.modules {
         doneList: KnockoutObservableArray<ITodoItem>;
         hasNoTitle: KnockoutObservable<boolean>;
         hasNoDescription: KnockoutObservable<boolean>;
+        isDuplicatedKey: KnockoutObservable<boolean>;
+        invalidKeyMessage: KnockoutObservable<string>;
+        isInvalidKey: KnockoutComputed<boolean>;
     
         constructor() {
             this.title = ko.observable<string>(''); 
@@ -20,12 +23,20 @@ module main.modules {
             this.toDoList = ko.observableArray<ITodoItem>([]);
             this.doneList = ko.observableArray<ITodoItem>([]);
             this.hasNoTitle = ko.observable<boolean>(false);
-            this.hasNoDescription = ko.observable<boolean>(false);
+            this.hasNoDescription = ko.observable<boolean>(false);            
+            this.isDuplicatedKey = ko.observable<boolean>(false);
+            this.invalidKeyMessage = ko.observable<string>('');
+            this.isInvalidKey = ko.computed(() =>{
+                return this.hasNoTitle() || this.isDuplicatedKey();
+            });                        
+        }; 
+        
+        public init(){
             this.getTodoList();
-        };           
+        }
     
         public addNewItem(){
-            if (this.validateData()){
+            if (this.hasValidData() && this.isUniqueKey()){
                 this.insertNewItem();
             }            
         };
@@ -63,10 +74,29 @@ module main.modules {
             }                    
         };
 
-        private validateData(){
+        private hasValidData(){
             this.hasNoTitle(this.title() === '');
             this.hasNoDescription(this.description() === '');
+            if (this.hasNoTitle()){
+                this.invalidKeyMessage('Insert a title');
+            }
             return !this.hasNoTitle() && !this.hasNoDescription();
+        }
+
+        private isUniqueKey(){
+            this.isDuplicatedKey(false);
+            var value = localStorage.getItem(this.title());
+            if (value){
+                this.isDuplicatedKey(true);
+                this.invalidKeyMessage('This title already was used');
+            }else{
+                value = localStorage.getItem(this.title() + '_Done');
+                if (value){
+                    this.isDuplicatedKey(true);
+                    this.invalidKeyMessage('This title already was used');
+                }
+            }
+            return !this.isDuplicatedKey();
         }
 
         private insertNewItem(){
@@ -78,10 +108,15 @@ module main.modules {
                 localStorage.setItem(item.title(), item.description());
             }             
             this.toDoList.push(item);
+            this.cleanData();
+        }
+
+        private cleanData() {
             this.title('');
             this.description('');
             this.hasNoTitle(false);
             this.hasNoDescription(false);
+            this.isDuplicatedKey(false);
         }
     }
 }
