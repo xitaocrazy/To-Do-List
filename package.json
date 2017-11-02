@@ -1,0 +1,22 @@
+{
+  "name": "to-do-list",
+  "version": "0.0.1",
+  "description": "Definição das dependências do proetoj",
+  "scripts": {},
+  "author": "Daniel de Souza Martins",
+  "license": "",
+  "devDependencies": {
+    "@types/jasmine": "^2.6.0",
+    "@types/jquery": "^3.2.15",
+    "@types/knockout": "^3.4.46",
+    "jasmine": "^2.8.0",
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-typescript": "^3.0.8",
+    "phantomjs": "^2.1.7",
+    "typescript": "^2.5.3"
+  }
+}
