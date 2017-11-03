@@ -19,7 +19,6 @@ var main;
                 };
                 this.title = ko.observable('');
                 this.description = ko.observable('');
-                this.actualView = ko.observable(0);
                 this.toDoList = ko.observableArray([]);
                 this.doneList = ko.observableArray([]);
                 this.hasNoTitle = ko.observable(false);

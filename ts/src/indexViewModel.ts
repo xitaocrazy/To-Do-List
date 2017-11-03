@@ -7,7 +7,6 @@ module main.modules {
     export class IndexViewModel {
         title: KnockoutObservable<string>;
         description: KnockoutObservable<string>;
-        actualView: KnockoutObservable<number>;
         toDoList: KnockoutObservableArray<ITodoItem>;
         doneList: KnockoutObservableArray<ITodoItem>;
         hasNoTitle: KnockoutObservable<boolean>;
@@ -19,7 +18,6 @@ module main.modules {
         constructor() {
             this.title = ko.observable<string>(''); 
             this.description = ko.observable<string>('');
-            this.actualView = ko.observable(0);
             this.toDoList = ko.observableArray<ITodoItem>([]);
             this.doneList = ko.observableArray<ITodoItem>([]);
             this.hasNoTitle = ko.observable<boolean>(false);
@@ -59,8 +57,8 @@ module main.modules {
                     var key = localStorage.key(i);
                     var value = localStorage.getItem(key);
                     var item = {
-                        title:  ko.observable(key), 
-                        description:  ko.observable(value) 
+                        title:  ko.observable<string>(key), 
+                        description:  ko.observable<string>(value) 
                     };
                     
                     var isDone = /_Done$/i.test(key);
@@ -101,8 +99,8 @@ module main.modules {
 
         private insertNewItem(){
             var item = {
-                title:  ko.observable(this.title()), 
-                description:  ko.observable(this.description()) 
+                title:  ko.observable<string>(this.title()), 
+                description:  ko.observable<string>(this.description()) 
             };
             if (typeof(Storage) !== "undefined") {
                 localStorage.setItem(item.title(), item.description());
