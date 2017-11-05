@@ -1,7 +1,7 @@
 describe('With an IndexViewModel', function () {
     var vm;
     beforeEach(function () {
-        vm = new main.modules.IndexViewModel();
+        vm = new main.IndexViewModel();
     });
     describe('when build the object', function () {
         it('shloud set "title" as expected', function () {

@@ -1,4 +1,4 @@
-module main.modules {
+namespace main {
     export interface ITodoItem{
         title: KnockoutObservable<string>;
         description: KnockoutObservable<string>;
