@@ -3,12 +3,12 @@ To build and execute the project, please follow the steps below:
 1 - Download and install Node.js in your computer:
     - https://nodejs.org/en/download/
 2 - Go to the project root directory in command prompt:
-    - Exemplo to Windows: cd C:\Documents\GitHub\To-Do-List
+    - Example to Windows: cd C:\Documents\GitHub\To-Do-List
 3 - Execute the command below:
     - npm install:
     - this will install all the node modules necessary to run the project.
 4 - When finish the node modules instalation, go to ts folder in command prompt:
-    - Exemplo to Windows: cd C:\Documents\GitHub\To-Do-List\ts
+    - Example to Windows: cd C:\Documents\GitHub\To-Do-List\ts
 5 - Execute the command below:
     - tsc:
     - this will compile the typeScript files and generate the javascript files.
@@ -21,7 +21,7 @@ To build and execute the project, please follow the steps below:
 To execute the tests, please follow the steps below:
 
 1 - Go to the project root directory in command prompt:
-    - Exemplo to Windows: cd C:\Documents\GitHub\To-Do-List
+    - Example to Windows: cd C:\Documents\GitHub\To-Do-List
 3 - Execute the command below:
     - karma start:
     - this will run all tests.
